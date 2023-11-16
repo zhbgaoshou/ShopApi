@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from . import serializers
 from . import models
-from .filters import ProductSpecGroupFileter
+from .filters import ProductSpecGroupFileter, ProductPriceFileter
 
 
 # Create your views here.
@@ -14,7 +14,7 @@ class ProductView(ModelViewSet):
     serializer_class = serializers.ProductSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['type']
+    filterset_class = ProductPriceFileter
     search_fields = ['title', 'description']
 
 
