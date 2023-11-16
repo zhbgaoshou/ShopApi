@@ -14,7 +14,6 @@ class WxUserView(GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
     serializer_class = serializers.WxUserSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id']
     search_fields = ['username']
 
 
@@ -23,7 +22,7 @@ class UserAddressView(ModelViewSet):
     serializer_class = serializers.UserAddressSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'user']
+    filterset_fields = ['user']
     search_fields = ['receiver', 'address', 'cellphone']
 
 
@@ -32,7 +31,7 @@ class UserProductCartView(ModelViewSet):
     serializer_class = serializers.UserProductCartSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'user', 'product']
+    filterset_fields = ['user', 'product']
 
 
 class UserOrderView(ModelViewSet):
@@ -40,4 +39,4 @@ class UserOrderView(ModelViewSet):
     serializer_class = serializers.UserOrderSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'order_number', 'user', 'status', 'product']
+    filterset_fields = ['order_number', 'user', 'status', 'product']

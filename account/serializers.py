@@ -27,7 +27,7 @@ class ShopSerializer(serializers.ModelSerializer):
         model = models.Shop
         fields = "__all__"
         extra_kwargs = {
-            'account': {
+            'account_id': {
                 'write_only': True
             }
         }

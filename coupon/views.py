@@ -13,5 +13,5 @@ class CouponView(ModelViewSet):
     queryset = models.Coupon.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'status']
+    filterset_fields = ['status']
     search_fields = ['valve']

@@ -13,7 +13,7 @@ class CommentView(ModelViewSet):
     queryset = models.Comment.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'product', 'user']
+    filterset_fields = ['product', 'user']
     search_fields = ['title']
 
 
@@ -36,5 +36,5 @@ class CommentUpvoteView(ModelViewSet):
     queryset = models.CommentUpvote.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'comment', 'user']
+    filterset_fields = ['comment', 'user']
     search_fields = ['count']

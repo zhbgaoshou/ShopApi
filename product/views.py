@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from . import serializers
 from . import models
-from .filters import ProductFileter
+from .filters import ProductSpecGroupFileter
 
 
 # Create your views here.
@@ -12,10 +12,9 @@ class ProductView(ModelViewSet):
     """
     queryset = models.Product.objects.all().order_by('id')
     serializer_class = serializers.ProductSerializer
-    filterset_class = ProductFileter
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'type']
+    filterset_fields = ['type']
     search_fields = ['title', 'description']
 
 
@@ -27,7 +26,6 @@ class ProductTypeView(ModelViewSet):
     queryset = models.Type.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id']
     search_fields = ['className']
 
 
@@ -43,24 +41,26 @@ class ProductImageView(ModelViewSet):
     ordering = ['id']
 
 
-class ProductPropertyView(ModelViewSet):
+class ProductSpecView(ModelViewSet):
     """
     产品规格视图
     """
     serializer_class = serializers.ProductPropertySerializer
-    queryset = models.ProductProperty.objects.all()
-    filterset_fields = ['product', 'id']
+    queryset = models.ProductSpec.objects.all()
+    filterset_fields = ['product']
     ordering_fields = "__all__"
     ordering = ['id']
     search_fields = ['property_name']
 
 
-class ProductPropertyGroupView(ModelViewSet):
+class ProductSpecGroupView(ModelViewSet):
     """
     产品SKU视图
     """
     serializer_class = serializers.ProductPropertyGroupSerializer
-    queryset = models.ProductPropertyGroup.objects.all()
-    filterset_fields = ['product', 'id', 'group']
+    queryset = models.ProductSpecGroup.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
+    search_fields = ['group_price']
+    filterset_class = ProductSpecGroupFileter
+

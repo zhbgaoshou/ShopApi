@@ -39,7 +39,7 @@ class ProductPropertySerializer(serializers.ModelSerializer):
     product_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = models.ProductProperty
+        model = models.ProductSpec
         fields = "__all__"
 
     def get_product_info(self, obj):
@@ -54,7 +54,7 @@ class ProductPropertyGroupSerializer(serializers.ModelSerializer):
     product_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = models.ProductPropertyGroup
+        model = models.ProductSpecGroup
         fields = "__all__"
 
     def get_product_info(self, obj):

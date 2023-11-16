@@ -13,7 +13,7 @@ class IndexCarouselView(ModelViewSet):
     queryset = models.IndexCarousel.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'product']
+    filterset_fields = ['product']
 
 
 class IndexSeckillView(ModelViewSet):
@@ -24,7 +24,7 @@ class IndexSeckillView(ModelViewSet):
     queryset = models.IndexSeckill.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'product']
+    filterset_fields = ['product']
 
 
 class IndexSuggestView(ModelViewSet):
@@ -35,4 +35,4 @@ class IndexSuggestView(ModelViewSet):
     queryset = models.IndexSuggest.objects.all()
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['id', 'product']
+    filterset_fields = ['product']
