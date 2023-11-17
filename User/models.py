@@ -1,5 +1,5 @@
 from django.db import models
-from product.models import Product
+from product.models import Product, ProductSpecGroup
 from utils import utils
 
 
@@ -37,6 +37,8 @@ class UserProductCart(models.Model):
                              on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, verbose_name='商品', null=True, blank=True, default=None,
                                 help_text='商品ID', on_delete=models.CASCADE)
+    spec = models.ForeignKey(to=ProductSpecGroup, verbose_name='规格',null=True, blank=True, default=None,
+                             help_text='商品规格ID', on_delete=models.CASCADE)
 
 
 class UserOrder(models.Model):
