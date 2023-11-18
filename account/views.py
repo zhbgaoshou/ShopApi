@@ -110,12 +110,10 @@ class UserInfoView(APIView):
 @method_decorator(name="create", decorator=swagger_auto_schema(
     operation_summary='添加店铺信息',
     operation_description='添加店铺信息',
-    request_body=serializers.ShopSerializer
 ))
 @method_decorator(name="update", decorator=swagger_auto_schema(
     operation_summary='修改店铺信息',
     operation_description='应答和 PATCH 方法相同，但 PUT 要求在请求中提交所有信息，不推荐使用',
-    request_body=serializers.ShopSerializer
 ))
 class ShopView(ModelViewSet):
     """
