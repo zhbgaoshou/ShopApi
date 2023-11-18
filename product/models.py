@@ -55,5 +55,6 @@ class ProductSpecGroup(models.Model):
     group = models.CharField(verbose_name='产品规格组合', max_length=225, help_text='产品规格组合')
     group_price = models.DecimalField(verbose_name='组合价格', max_digits=10, decimal_places=2, help_text='组合价格')
     group_sales = models.IntegerField(verbose_name='组合销售量', default=0, help_text='组合销售量')
-    group_image = models.ImageField(verbose_name='组合图片', upload_to='static/product/spec/images',
+    group_image = models.ImageField(verbose_name='组合图片',null=True,blank=True,default=None,
+                                    upload_to='static/product/spec/images',
                                     help_text='该组合的图片')

@@ -8,9 +8,27 @@ from . import models
 from rest_framework.mixins import ListModelMixin, DestroyModelMixin, RetrieveModelMixin
 
 
+@method_decorator(name="list", decorator=swagger_auto_schema(
+    operation_summary='获取全部客户的信息',
+    operation_description="""
+    search_value:对用户名进行搜索
+    """
+))
+@method_decorator(name="destroy", decorator=swagger_auto_schema(
+    operation_summary='删除客户',
+    operation_description="""
+    删除指定客户
+    """
+))
+@method_decorator(name="retrieve", decorator=swagger_auto_schema(
+    operation_summary='查看单个客户',
+    operation_description="""
+    查看单个客户
+    """
+))
 class AccountView(GenericViewSet, ListModelMixin, DestroyModelMixin, RetrieveModelMixin):
     """
-    对客户表的增、删、改、查
+    对客户表的删、查
     """
     serializer_class = serializers.AccountSerializer
     queryset = models.Account.objects.all()
@@ -22,12 +40,22 @@ class AccountView(GenericViewSet, ListModelMixin, DestroyModelMixin, RetrieveMod
 class RegisterView(APIView):
     """
     客户注册
+    参数：
+        "username":用户名,
+        "password"：密码
+        "level":角色/级别(3, 'admin'), (2, 'editor'), (1, 'other')
+    例子:
+    {
+        "username":'admin',
+        "password"：'123456'
+        "level":1
+    }
+
     """
 
     def post(self, request):
         ser = serializers.AccountSerializer(data=request.data)
         if ser.is_valid():
-            # ser.validated_data
             data = models.Account.objects.create_user(**ser.validated_data)
             ser.instance = data
             return Response(ser.data)
@@ -38,10 +66,17 @@ class RegisterView(APIView):
 class SetPasswordView(APIView):
     """
     修改客户密码
+    参数:password,account_id
+
+    例子:
+    url :
     """
 
     def post(self, request, aid):
         pwd = request.data.get('password')
+        print(pwd)
+        if pwd is None:
+            return Response({'msg': '密码不能为空'}, status=404)
         try:
             u = models.Account.objects.get(pk=aid)
         except models.Account.DoesNotExist:

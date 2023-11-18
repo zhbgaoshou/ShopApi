@@ -15,7 +15,7 @@ def account_router():
 def account_info_router():
     urls = [
         path('api/token/register', views.RegisterView.as_view()),
-        path('api/token/set_password', views.SetPasswordView.as_view()),
+        path('api/token/set_password/<int:aid>/', views.SetPasswordView.as_view()),
         path('api/token/userinfo', views.UserInfoView.as_view()),
         path('api/token/login', TokenObtainPairView.as_view()),
         path('api/token/refresh_token', TokenRefreshView.as_view())

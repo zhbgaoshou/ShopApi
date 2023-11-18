@@ -20,3 +20,9 @@ class PublicPagination(pagination.PageNumberPagination):
     # page=last的时候会直接到最后一页
     # 如果不改参数的话，可以不用设置，不设置的话默认参数就是last
     last_page_strings = 'last'
+
+    def get_page_number(self, request, paginator):
+        page_number = request.query_params.get(self.page_query_param, '1')
+        if page_number in self.last_page_strings:
+            page_number = paginator.num_pages
+        return page_number
