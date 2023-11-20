@@ -40,7 +40,7 @@ class UserProductCart(models.Model):
                              on_delete=models.CASCADE)
     product = models.ForeignKey(to=Product, verbose_name='商品', null=True, blank=True, default=None,
                                 help_text='商品ID', on_delete=models.CASCADE)
-    spec = models.ForeignKey(to=ProductSpecGroup, verbose_name='规格',null=True, blank=True, default=None,
+    spec = models.ForeignKey(to=ProductSpecGroup, verbose_name='规格', null=True, blank=True, default=None,
                              help_text='商品规格ID', on_delete=models.CASCADE)
 
 
@@ -63,6 +63,8 @@ class UserOrder(models.Model):
                                   null=True, blank=True)
     product = models.ForeignKey(to=Product, null=True, blank=True, default=None, verbose_name='商品',
                                 help_text='商品ID', on_delete=models.CASCADE)
+    address = models.ForeignKey(to=UserAddress, on_delete=models.CASCADE, null=True, blank=True, default=None,
+                                help_text='地址ID', verbose_name='订单地址')
 
 
 @receiver(post_delete, sender=WxUser)
