@@ -23,6 +23,8 @@ schema_view = get_schema_view(
             3.这是第一版接口，有什么建议可以跟我说，我到时候再弄
             
             4.关于登录注册等接口跟token相关的接口我写在token模块里面，原因是为了方便管理
+            
+            
         
         """,
         terms_of_service="https://www.example.com/policies/terms/",

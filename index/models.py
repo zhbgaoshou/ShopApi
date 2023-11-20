@@ -12,7 +12,8 @@ class IndexCarousel(models.Model):
     """
     首页轮播图产品
     """
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='轮播图产品', help_text='产品ID')
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='轮播图产品', help_text='产品ID',
+                                null=True, blank=True, default=None)
     image = models.ImageField(upload_to='static/index/images/%Y-%m-%d')
 
 
@@ -20,14 +21,16 @@ class IndexSeckill(models.Model):
     """
     首页秒杀产品
     """
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='秒杀区产品', help_text='产品ID')
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='秒杀区产品', help_text='产品ID',
+                                null=True, blank=True, default=None)
 
 
 class IndexSuggest(models.Model):
     """
     首页推荐产品
     """
-    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='首页推荐产品', help_text='产品ID')
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='首页推荐产品', help_text='产品ID',
+                                null=True, blank=True, default=None)
 
 
 @receiver(post_delete, sender=IndexCarousel)
