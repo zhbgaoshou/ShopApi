@@ -13,6 +13,8 @@ class Type(models.Model):
     产品分类
     """
     className = models.CharField(verbose_name='产品分类', max_length=10, help_text='产品分类名字')
+    image = models.ImageField(upload_to='static/product/type/images/%Y-%m-%d', verbose_name='分类图片',
+                              help_text='分类图片', null=True, blank=True, default=None)
 
 
 class ProductImg(models.Model):
@@ -38,7 +40,8 @@ class Product(models.Model):
     type = models.ForeignKey(to='Type', null=True, blank=True, default=None, on_delete=models.CASCADE,
                              related_name='type_id', help_text='产品分类ID')
     description = models.TextField(verbose_name='产品描述', help_text='产品描述')
-    cover = models.ImageField(upload_to='static/product/cover/images', verbose_name='产品封面', help_text='产品封面')
+    cover = models.ImageField(upload_to='static/product/cover/images/%Y-%m-%d', verbose_name='产品封面',
+                              help_text='产品封面')
 
 
 class ProductSpec(models.Model):
@@ -75,5 +78,12 @@ def del_shop_static(sender, instance, **kwargs):
 @receiver(post_delete, sender=ProductSpecGroup)
 def del_shop_static(sender, instance, **kwargs):
     image_path = instance.group_image.path
+    if image_path and os.path.exists(image_path):
+        os.remove(image_path)
+
+
+@receiver(post_delete, sender=Product)
+def del_shop_static(sender, instance, **kwargs):
+    image_path = instance.cover.path
     if image_path and os.path.exists(image_path):
         os.remove(image_path)

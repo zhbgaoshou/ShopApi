@@ -13,7 +13,7 @@ class Account(AbstractUser):
     客户表
     """
     level_choices = ((3, 'admin'), (2, 'editor'), (1, 'other'))
-    level = models.SmallIntegerField(choices=level_choices, default=1, verbose_name='级别',
+    level = models.SmallIntegerField(choices=level_choices, default=2, verbose_name='级别',
                                      help_text="角色/身份(3, 'admin'), (2, 'editor'), (1, 'other')")
     avatar = models.ImageField(verbose_name='头像', null=True, blank=True, default=None,
                                upload_to='static/account/avatar/images/%Y-%m-%d', help_text='客户头像')
