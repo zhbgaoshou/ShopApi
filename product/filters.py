@@ -25,4 +25,4 @@ class ProductPriceFileter(django_filters.FilterSet):
 
     class Meta:
         model = models.Product
-        fields = ['max_price', 'min_price', 'type']
+        fields = ['max_price', 'min_price', 'type', "check_status", "category1", 'category2']

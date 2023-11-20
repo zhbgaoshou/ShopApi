@@ -18,6 +18,24 @@ class ProductView(ModelViewSet):
     search_fields = ['title', 'description']
 
 
+class Category1View(ModelViewSet):
+    queryset = models.Category1.objects.all()
+    serializer_class = serializers.Category1Serializer
+    ordering_fields = "__all__"
+    ordering = ['sort']
+    filterset_fields = ['sort']
+    search_fields = ['name']
+
+
+class Category2View(ModelViewSet):
+    queryset = models.Category2.objects.all()
+    serializer_class = serializers.Category2Serializer
+    ordering_fields = "__all__"
+    ordering = ['sort']
+    filterset_fields = ['category1', 'sort']
+    search_fields = ['name']
+
+
 class ProductTypeView(ModelViewSet):
     """
     对产品分类表的增、删、改、查
@@ -32,7 +50,6 @@ class ProductTypeView(ModelViewSet):
 class ProductImageView(ModelViewSet):
     """
         对产品图片表的增、删、改、查
-        注意：产品表有数据才能对这张表进行操作
         """
     serializer_class = serializers.ProductImageSerializer
     queryset = models.ProductImg.objects.all()
@@ -63,4 +80,3 @@ class ProductSpecGroupView(ModelViewSet):
     ordering = ['id']
     search_fields = ['group_price']
     filterset_class = ProductSpecGroupFileter
-

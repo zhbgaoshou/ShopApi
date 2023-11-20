@@ -17,6 +17,30 @@ class Type(models.Model):
                               help_text='分类图片', null=True, blank=True, default=None)
 
 
+class Category1(models.Model):
+    """
+    一级分类表
+    """
+    name = models.CharField(help_text='一级分类名字', verbose_name='一级分类名字', max_length=225)
+    image = models.ImageField(help_text='一级分类图片', verbose_name='一级分类图片',
+                              upload_to='static/product/Category1/images/%Y-%m-%d', null=True, blank=True, default=None)
+
+    sort = models.IntegerField(help_text='排序', verbose_name='排序', default=1)
+
+
+class Category2(models.Model):
+    """
+    二级分类表
+    """
+    name = models.CharField(help_text='二级分类名字', verbose_name='二级分类名字', max_length=225)
+    image = models.ImageField(help_text='二级分类图片', verbose_name='二级分类图片',
+                              upload_to='static/product/Category2/images/%Y-%m-%d', null=True, blank=True, default=None)
+
+    category1 = models.ForeignKey(to=Category1, on_delete=models.CASCADE, null=True, blank=True, default=None,
+                                  verbose_name='一级分类ID', help_text='一级分类ID')
+    sort = models.IntegerField(help_text='排序', verbose_name='排序', default=1)
+
+
 class ProductImg(models.Model):
     """
     产品图片
@@ -33,6 +57,7 @@ class Product(models.Model):
     """
         产品表
     """
+    check_choices = ((0, '未审核'), (1, '已审核'))
     title = models.CharField(verbose_name='标题', max_length=225, help_text='标题')
     price = models.DecimalField(verbose_name='价格', help_text='价格', max_digits=10, decimal_places=2,
                                 default=0,
@@ -42,6 +67,12 @@ class Product(models.Model):
     description = models.TextField(verbose_name='产品描述', help_text='产品描述')
     cover = models.ImageField(upload_to='static/product/cover/images/%Y-%m-%d', verbose_name='产品封面',
                               help_text='产品封面')
+    category1 = models.ForeignKey(to=Category1, on_delete=models.CASCADE, null=True, blank=True, default=None,
+                                  verbose_name='一级分类ID', help_text='一级分类ID')
+    category2 = models.ForeignKey(to=Category2, on_delete=models.CASCADE, null=True, blank=True, default=None,
+                                  verbose_name='二级分类ID', help_text='二级分类ID')
+    check_status = models.SmallIntegerField(choices=check_choices, help_text="审核状态(0, '未审核'), (1, '已审核')",
+                                            verbose_name="审核状态(0, '未审核'), (1, '已审核')", default=0)
 
 
 class ProductSpec(models.Model):
@@ -66,6 +97,7 @@ class ProductSpecGroup(models.Model):
     group_image = models.ImageField(verbose_name='组合图片', null=True, blank=True, default=None,
                                     upload_to='static/product/spec/images/%Y-%m-%d',
                                     help_text='该组合的图片')
+    count = models.IntegerField(verbose_name='组合库存', help_text='组合库存')
 
 
 @receiver(post_delete, sender=ProductImg)
@@ -93,6 +125,22 @@ def del_static(sender, instance, **kwargs):
 
 
 @receiver(post_delete, sender=Type)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
+
+
+@receiver(post_delete, sender=Category1)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
+
+
+@receiver(post_delete, sender=Category2)
 def del_static(sender, instance, **kwargs):
     if instance.image:
         image_path = instance.image.path

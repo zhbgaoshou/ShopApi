@@ -10,4 +10,7 @@ def product_router():
     router.register('product_image', views.ProductImageView, basename='product')
     router.register('product_spec', views.ProductSpecView, basename='product')
     router.register('product_spec_group', views.ProductSpecGroupView, basename='product')
+    router.register('product_category1', views.Category1View, basename='product')
+    router.register('product_category2', views.Category2View, basename='product')
+
     return router.urls

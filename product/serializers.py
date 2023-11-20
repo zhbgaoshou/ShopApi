@@ -2,6 +2,24 @@ from rest_framework import serializers
 from . import models
 
 
+class Category1Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category1
+        fields = "__all__"
+
+
+class Category2Serializer(serializers.ModelSerializer):
+    category1_info = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.Category2
+        fields = "__all__"
+
+    def get_category1_info(self, obj):
+        ser = Category1Serializer(instance=obj.category1)
+        return ser.data
+
+
 class ProductTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Type
@@ -12,14 +30,28 @@ class ProductTypeSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    typeInfo = ProductTypeSerializer(read_only=True, source='type')
+    type_info = serializers.SerializerMethodField(read_only=True)
+    category1_info = serializers.SerializerMethodField(read_only=True)
+    category2_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.Product
-        fields = ["id", "title", 'price', 'type', "typeInfo", 'cover']
+        fields = "__all__"
         extra_kwargs = {
             "id": {"read_only": True},
         }
+
+    def get_type_info(self, obj):
+        ser = ProductTypeSerializer(instance=obj.type)
+        return ser.data
+
+    def get_category1_info(self, obj):
+        ser = Category1Serializer(instance=obj.category1)
+        return ser.data
+
+    def get_category2_info(self, obj):
+        ser = Category2Serializer(instance=obj.category2)
+        return ser.data
 
 
 class ProductImageSerializer(serializers.ModelSerializer):
@@ -64,4 +96,3 @@ class ProductPropertyGroupSerializer(serializers.ModelSerializer):
     def get_product_info(self, obj):
         ser = ProductSerializer(instance=obj.product)
         return ser.data
-
