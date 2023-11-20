@@ -15,8 +15,8 @@ def generate_uuid():
 
 def generate_image_path(instance, filename, appname):
     file_name = f'{generate_order_number()}==={generate_uuid()}'
-    print('instance',instance)
-    print('filename',filename)
-    print('appname',appname)
+    print('instance', instance)
+    print('filename', filename)
+    print('appname', appname)
 
     return f'static/{appname}/{filename}'

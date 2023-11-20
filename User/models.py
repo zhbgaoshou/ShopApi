@@ -1,4 +1,7 @@
+import os
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from product.models import Product, ProductSpecGroup
 from utils import utils
 
@@ -11,7 +14,7 @@ class WxUser(models.Model):
     """
     username = models.CharField(verbose_name='用户名', max_length=225, help_text='微信用户名字')
     openId = models.CharField(verbose_name='openId', max_length=100, help_text='openId')
-    avatar = models.ImageField(verbose_name='微信头像', upload_to='static/User/images', help_text='用户头像')
+    avatar = models.ImageField(verbose_name='微信头像', upload_to='static/User/images/%Y-%m-%d', help_text='用户头像')
 
 
 class UserAddress(models.Model):
@@ -60,3 +63,10 @@ class UserOrder(models.Model):
                                   null=True, blank=True)
     product = models.ForeignKey(to=Product, null=True, blank=True, default=None, verbose_name='商品',
                                 help_text='商品ID', on_delete=models.CASCADE)
+
+
+@receiver(post_delete, sender=WxUser)
+def del_shop_static(sender, instance, **kwargs):
+    image_path = instance.avatar.path
+    if image_path and os.path.exists(image_path):
+        os.remove(image_path)

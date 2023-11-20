@@ -1,4 +1,3 @@
-
 import os
 from datetime import timedelta
 from pathlib import Path
@@ -7,10 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-@1@47z5c6a63^4avv=l$6efw%ox5#fw9m-6j=khvvk**!np@"
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
-
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -67,7 +65,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "shop",
         "USER": "root",
-        "PASSWORD": "13471421514x",
+        "PASSWORD": "123456",
         "HOST": "127.0.0.1",
         "PORT": '3306',
     }
@@ -88,7 +86,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = "zh-hans"
 
 TIME_ZONE = "Asia/Shanghai"
@@ -100,14 +97,12 @@ USE_TZ = True
 # 认证模型类
 AUTH_USER_MODEL = 'account.Account'
 
-
 STATIC_URL = "static/"
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -209,3 +204,8 @@ SIMPLE_JWT = {
 SWAGGER_SETTINGS = {
     'DEFAULT_MODEL_RENDERING': 'example'
 }
+
+try:
+    from .local_settings import *
+except ModuleNotFoundError as e:
+    pass

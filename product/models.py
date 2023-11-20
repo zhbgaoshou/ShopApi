@@ -1,4 +1,9 @@
+import os
+
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 from utils import utils
 
 
@@ -15,7 +20,7 @@ class ProductImg(models.Model):
     产品图片
     """
     image_type_choices = ((0, '产品轮播'), (1, '产品详情'))
-    image = models.ImageField(verbose_name='图片地址', upload_to='static/product/images', help_text='产品图片')
+    image = models.ImageField(verbose_name='图片地址', upload_to='static/product/images/%Y-%m-%d', help_text='产品图片')
     img_type = models.SmallIntegerField(choices=image_type_choices, verbose_name='图片类型',
                                         help_text='图片类型(0:产品轮播,1:产品详情')
     product = models.ForeignKey(verbose_name='产品', to='Product', null=True, blank=True, default=None,
@@ -55,6 +60,20 @@ class ProductSpecGroup(models.Model):
     group = models.CharField(verbose_name='产品规格组合', max_length=225, help_text='产品规格组合')
     group_price = models.DecimalField(verbose_name='组合价格', max_digits=10, decimal_places=2, help_text='组合价格')
     group_sales = models.IntegerField(verbose_name='组合销售量', default=0, help_text='组合销售量')
-    group_image = models.ImageField(verbose_name='组合图片',null=True,blank=True,default=None,
-                                    upload_to='static/product/spec/images',
+    group_image = models.ImageField(verbose_name='组合图片', null=True, blank=True, default=None,
+                                    upload_to='static/product/spec/images/%Y-%m-%d',
                                     help_text='该组合的图片')
+
+
+@receiver(post_delete, sender=ProductImg)
+def del_shop_static(sender, instance, **kwargs):
+    image_path = instance.image.path
+    if image_path and os.path.exists(image_path):
+        os.remove(image_path)
+
+
+@receiver(post_delete, sender=ProductSpecGroup)
+def del_shop_static(sender, instance, **kwargs):
+    image_path = instance.group_image.path
+    if image_path and os.path.exists(image_path):
+        os.remove(image_path)

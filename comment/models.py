@@ -1,4 +1,9 @@
+import os
+
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
 from product.models import Product
 from User.models import WxUser
 
@@ -20,7 +25,7 @@ class CommentImage(models.Model):
     """
     评论对应的图片
     """
-    image = models.ImageField(upload_to='static/comment/images', help_text='评论图片')
+    image = models.ImageField(upload_to='static/comment/images/%Y-%m-%d', help_text='评论图片')
     comment = models.ForeignKey(to=Comment, null=True, blank=True, default=None, on_delete=models.CASCADE,
                                 verbose_name='评论', help_text='评论ID(哪个评论的图片)')
 
@@ -34,3 +39,10 @@ class CommentUpvote(models.Model):
                              verbose_name='点赞用户', help_text='用户ID')
     comment = models.ForeignKey(to=Comment, null=True, blank=True, default=None, on_delete=models.CASCADE,
                                 verbose_name='产品', help_text='评论ID(哪个评论的数量)')
+
+
+@receiver(post_delete, sender=CommentImage)
+def del_shop_static(sender, instance, **kwargs):
+    image_path = instance.image.path
+    if image_path and os.path.exists(image_path):
+        os.remove(image_path)
