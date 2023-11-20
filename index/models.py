@@ -34,7 +34,8 @@ class IndexSuggest(models.Model):
 
 
 @receiver(post_delete, sender=IndexCarousel)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.image.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)

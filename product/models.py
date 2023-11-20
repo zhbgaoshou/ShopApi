@@ -69,21 +69,32 @@ class ProductSpecGroup(models.Model):
 
 
 @receiver(post_delete, sender=ProductImg)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.image.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
 
 
 @receiver(post_delete, sender=ProductSpecGroup)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.group_image.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.group_image:
+        image_path = instance.group_image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
 
 
 @receiver(post_delete, sender=Product)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.cover.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.cover:
+        image_path = instance.cover.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
+
+
+@receiver(post_delete, sender=Type)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)

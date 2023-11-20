@@ -26,7 +26,8 @@ class Shop(models.Model):
     account = models.ForeignKey(to='Account', on_delete=models.CASCADE, null=True, blank=True, default=None,
                                 help_text='客户ID')
     name = models.CharField(verbose_name='店铺名称', max_length=225, help_text='店铺名称')
-    image = models.ImageField(verbose_name='图片地址', upload_to='static/account/shop/images/%Y-%m-%d', help_text='店铺的封面')
+    image = models.ImageField(verbose_name='图片地址', upload_to='static/account/shop/images/%Y-%m-%d',
+                              help_text='店铺的封面')
     score = models.SmallIntegerField(verbose_name='星级', default=1, help_text='店铺星级')
     description = models.TextField(verbose_name='店铺描述', help_text='店铺描述')
 
@@ -43,14 +44,17 @@ class ShopProduct(models.Model):
 
 
 @receiver(post_delete, sender=Shop)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.image.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.image:
+        image_path = instance.image.path
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
 
 
 @receiver(post_delete, sender=Account)
-def del_shop_static(sender, instance, **kwargs):
-    image_path = instance.avatar.path
-    if image_path and os.path.exists(image_path):
-        os.remove(image_path)
+def del_static(sender, instance, **kwargs):
+    if instance.avatar:
+        image_path = instance.avatar.path
+
+        if image_path and os.path.exists(image_path):
+            os.remove(image_path)
