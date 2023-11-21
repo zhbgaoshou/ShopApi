@@ -22,12 +22,25 @@ class UserAddressSerializer(serializers.ModelSerializer):
 
 
 class UserProductCartSerializer(serializers.ModelSerializer):
-    userInfo = WxUserSerializer(read_only=True, source='user')
-    productInfo = WxUserSerializer(read_only=True, source='product')
+    user_info = serializers.SerializerMethodField(read_only=True)
+    product_info = serializers.SerializerMethodField(read_only=True)
+    spec_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.UserProductCart
-        fields = ['count', 'user', 'userInfo', 'product', 'productInfo']
+        fields = "__all__"
+
+    def get_user_info(self, obj):
+        ser = WxUserSerializer(instance=obj.user)
+        return ser.data
+
+    def get_product_info(self, obj):
+        ser = WxUserSerializer(instance=obj.product)
+        return ser.data
+
+    def get_spec_info(self, obj):
+        ser = WxUserSerializer(instance=obj.spec)
+        return ser.data
 
 
 class UserOrderSerializer(serializers.ModelSerializer):
