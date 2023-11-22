@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 from product.models import Product
 from django.db.models.signals import post_delete
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -28,7 +29,8 @@ class Shop(models.Model):
     name = models.CharField(verbose_name='店铺名称', max_length=225, help_text='店铺名称')
     image = models.ImageField(verbose_name='图片地址', upload_to='static/account/shop/images/%Y-%m-%d',
                               help_text='店铺的封面')
-    score = models.SmallIntegerField(verbose_name='星级', default=1, help_text='店铺星级')
+    score = models.SmallIntegerField(verbose_name='星级', default=1, help_text='店铺星级',
+                                     validators=[MaxValueValidator(5), MinValueValidator(1)])
     description = models.TextField(verbose_name='店铺描述', help_text='店铺描述')
 
 

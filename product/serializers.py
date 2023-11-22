@@ -3,13 +3,19 @@ from . import models
 
 
 class Category1Serializer(serializers.ModelSerializer):
+    Category_text = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = models.Category1
         fields = "__all__"
 
+    def get_Category_text(self):
+        return '一级分类'
+
 
 class Category2Serializer(serializers.ModelSerializer):
     category1_info = serializers.SerializerMethodField(read_only=True)
+    Category_text = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.Category2
@@ -18,6 +24,9 @@ class Category2Serializer(serializers.ModelSerializer):
     def get_category1_info(self, obj):
         ser = Category1Serializer(instance=obj.category1)
         return ser.data
+
+    def get_Category_text(self):
+        return '二级分类'
 
 
 class ProductTypeSerializer(serializers.ModelSerializer):

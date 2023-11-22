@@ -1,7 +1,6 @@
-import re
 from rest_framework import serializers
+
 from . import models
-from product.serializers import ProductSerializer
 
 
 class WxUserSerializer(serializers.ModelSerializer):
@@ -30,15 +29,18 @@ class UserProductCartSerializer(serializers.ModelSerializer):
         model = models.UserProductCart
         fields = "__all__"
 
-    def get_user_info(self, obj):
+    @staticmethod
+    def get_user_info(obj):
         ser = WxUserSerializer(instance=obj.user)
         return ser.data
 
-    def get_product_info(self, obj):
+    @staticmethod
+    def get_product_info(obj):
         ser = WxUserSerializer(instance=obj.product)
         return ser.data
 
-    def get_spec_info(self, obj):
+    @staticmethod
+    def get_spec_info(obj):
         ser = WxUserSerializer(instance=obj.spec)
         return ser.data
 
@@ -55,6 +57,7 @@ class UserOrderSerializer(serializers.ModelSerializer):
             }
         }
 
-    def get_status_info(self, data):
+    @staticmethod
+    def get_status_info(data):
 
         return data.get_status_display()
