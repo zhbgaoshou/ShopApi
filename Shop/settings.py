@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     'index',
     'coreapi',
     'drf_yasg',
-    "corsheaders"
+    "corsheaders",
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -91,6 +92,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Shop.wsgi.application"
+ASGI_APPLICATION = "Shop.routing.application"
 
 DATABASES = {
     "default": {
