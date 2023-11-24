@@ -14,7 +14,8 @@ class WxUser(models.Model):
     """
     username = models.CharField(verbose_name='用户名', max_length=225, help_text='微信用户名字')
     openId = models.CharField(verbose_name='openId', max_length=100, help_text='openId')
-    avatar = models.ImageField(verbose_name='微信头像', upload_to='static/User/images/%Y-%m-%d', help_text='用户头像')
+    avatar = models.ImageField(verbose_name='微信头像', upload_to='static/User/images/%Y-%m-%d', help_text='用户头像',
+                               null=True, blank=True, default=None)
 
 
 class UserAddress(models.Model):
