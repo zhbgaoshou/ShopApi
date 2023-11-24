@@ -7,6 +7,7 @@ from doc.router import doc_router
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include(Routers.get_router())),
+    path('chat/', include('chat.urls'))
 ]
 
 # token路由和文档路由

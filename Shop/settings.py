@@ -92,7 +92,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "Shop.wsgi.application"
-ASGI_APPLICATION = "Shop.routing.application"
+# ASGI_APPLICATION = "Shop.routing.application"
 
 DATABASES = {
     "default": {
@@ -238,6 +238,14 @@ SIMPLE_JWT = {
 SWAGGER_SETTINGS = {
     'DEFAULT_MODEL_RENDERING': 'example'
 }
+
+# channel layer配置
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}
+
 
 try:
     from .local_settings import *

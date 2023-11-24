@@ -21,6 +21,7 @@ class Category1(models.Model):
     """
     一级分类表
     """
+
     name = models.CharField(help_text='一级分类名字', verbose_name='一级分类名字', max_length=225)
     image = models.ImageField(help_text='一级分类图片', verbose_name='一级分类图片',
                               upload_to='static/product/Category1/images/%Y-%m-%d', null=True, blank=True, default=None)

@@ -14,6 +14,7 @@ class WxUserView(GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
     serializer_class = serializers.WxUserSerializer
     ordering_fields = "__all__"
     ordering = ['id']
+    filterset_fields = ['openId']
     search_fields = ['username']
 
 

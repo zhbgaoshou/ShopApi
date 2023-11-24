@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+<div class="container">
+
+</div>
+
+<script>
+   if('WebSocket' in window){
+
+       const ws = new WebSocket('ws:127.0.0.1:8000/ws/chat/')
+       if(ws.readyState === 0 ){
+           console.log('连接中...')
+       }
+
+       ws.onopen = function (){
+           console.log('连接成功...')
+           ws.send('连接成功了')
+       }
+
+       ws.onclose = function (){
+           console.log('连接关闭...')
+       }
+
+       ws.onerror = function (){
+           console.log('连接错误...')
+       }
+
+       ws.onmessage = function (evt){
+           console.log('接收到信息:' + evt.data)
+       }
+
+   }else {
+       alert('您的浏览器不支持WebSocket')
+   }
+</script>
+</body>
+</html>
