@@ -9,7 +9,7 @@ from . import serializers
 
 # Create your views here.
 
-class WxUserView(GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin, mixins.RetrieveModelMixin):
+class WxUserView(ModelViewSet):
     queryset = models.WxUser.objects.all()
     serializer_class = serializers.WxUserSerializer
     ordering_fields = "__all__"

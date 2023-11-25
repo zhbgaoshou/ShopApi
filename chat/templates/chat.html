@@ -6,10 +6,18 @@
 </head>
 <body>
 <div class="container">
-
+    <label>
+        <input id="In" type="text" />
+        <button onclick="sendData()">发送</button>
+    </label>
 </div>
 
 <script>
+    const In = document.getElementById('In')
+    let sendFy = {
+        sender:'user'
+    }
+
    if('WebSocket' in window){
 
        const ws = new WebSocket('ws:127.0.0.1:8000/ws/chat/')
@@ -32,6 +40,11 @@
 
        ws.onmessage = function (evt){
            console.log('接收到信息:' + evt.data)
+       }
+
+       function sendData(){
+           sendFy['message'] = In.value
+           ws.send(JSON.stringify(sendFy))
        }
 
    }else {
