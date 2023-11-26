@@ -78,7 +78,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 class ProductPropertySerializer(serializers.ModelSerializer):
     product_info = serializers.SerializerMethodField(read_only=True)
-    property_obj = serializers.SerializerMethodField(read_only=True)
+    property_array = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.ProductSpec
@@ -91,12 +91,13 @@ class ProductPropertySerializer(serializers.ModelSerializer):
     def validated_property(self, value):
         pass
 
-    def get_property_obj(self, obj):
-        return obj.property_name.split("|")
+    def get_property_array(self, obj):
+        return obj.property.split("|")
 
 
 class ProductPropertyGroupSerializer(serializers.ModelSerializer):
     product_info = serializers.SerializerMethodField(read_only=True)
+    group_array = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = models.ProductSpecGroup
@@ -105,3 +106,6 @@ class ProductPropertyGroupSerializer(serializers.ModelSerializer):
     def get_product_info(self, obj):
         ser = ProductSerializer(instance=obj.product)
         return ser.data
+
+    def get_group_array(self, obj):
+        return obj.group.split('|')

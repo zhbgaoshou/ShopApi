@@ -37,7 +37,6 @@ class UserAddressSerializer(serializers.ModelSerializer):
 
 class UserProductCartSerializer(serializers.ModelSerializer):
     user_info = serializers.SerializerMethodField(read_only=True)
-    product_info = serializers.SerializerMethodField(read_only=True)
     spec_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -47,11 +46,6 @@ class UserProductCartSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_user_info(obj):
         ser = WxUserSerializer(instance=obj.user)
-        return ser.data
-
-    @staticmethod
-    def get_product_info(obj):
-        ser = ProductSerializer(instance=obj.product)
         return ser.data
 
     @staticmethod

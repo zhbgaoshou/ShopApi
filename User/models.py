@@ -57,8 +57,6 @@ class UserProductCart(models.Model):
     count = models.IntegerField(verbose_name='购买数量', help_text='购买数量')
     user = models.ForeignKey(verbose_name='用户', help_text='用户ID', null=True, blank=True, default=None, to='WxUser',
                              on_delete=models.CASCADE)
-    product = models.ForeignKey(to=Product, verbose_name='商品', null=True, blank=True, default=None,
-                                help_text='商品ID', on_delete=models.CASCADE)
     spec = models.ForeignKey(to=ProductSpecGroup, verbose_name='规格', null=True, blank=True, default=None,
                              help_text='商品规格ID', on_delete=models.CASCADE)
 

@@ -32,7 +32,7 @@ class UserProductCartView(ModelViewSet):
     serializer_class = serializers.UserProductCartSerializer
     ordering_fields = "__all__"
     ordering = ['id']
-    filterset_fields = ['user', 'product']
+    filterset_fields = ['user']
 
 
 class UserOrderView(ModelViewSet):
