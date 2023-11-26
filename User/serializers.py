@@ -17,7 +17,7 @@ class UserAddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.UserAddress
-        fields = ['receiver', 'address', 'cellphone', 'is_default', 'create_time', 'user', 'userInfo']
+        fields = ['id', 'receiver', 'address', 'cellphone', 'is_default', 'create_time', 'user', 'userInfo']
 
 
 class UserProductCartSerializer(serializers.ModelSerializer):
@@ -59,5 +59,4 @@ class UserOrderSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_status_info(data):
-
         return data.get_status_display()

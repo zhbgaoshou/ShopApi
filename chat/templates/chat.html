@@ -20,14 +20,13 @@
 
    if('WebSocket' in window){
 
-       const ws = new WebSocket('ws:127.0.0.1:8000/ws/chat/')
+       const ws = new WebSocket('ws:127.0.0.1:8000/ws/chat/openId/')
        if(ws.readyState === 0 ){
            console.log('连接中...')
        }
 
        ws.onopen = function (){
            console.log('连接成功...')
-           ws.send('连接成功了')
        }
 
        ws.onclose = function (){
@@ -39,7 +38,8 @@
        }
 
        ws.onmessage = function (evt){
-           console.log('接收到信息:' + evt.data)
+           let json_data = JSON.parse(evt.data)
+           console.log('接收到信息:' + json_data.data)
        }
 
        function sendData(){
