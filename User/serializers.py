@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from . import models
 
-from product.serializers import ProductSerializer, ProductPropertySerializer
+from product.serializers import ProductSerializer, ProductPropertyGroupSerializer
 
 
 class WxUserSerializer(serializers.ModelSerializer):
@@ -56,7 +56,7 @@ class UserProductCartSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_spec_info(obj):
-        ser = ProductPropertySerializer(instance=obj.spec)
+        ser = ProductPropertyGroupSerializer(instance=obj.spec)
         return ser.data
 
 
