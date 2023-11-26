@@ -18,6 +18,24 @@ class WxUser(models.Model):
                                null=True, blank=True, default=None)
 
 
+class UserAsset(models.Model):
+    user = models.ForeignKey(verbose_name='用户ID', null=True, blank=True, default=None, help_text='用户ID', to=WxUser,
+                             on_delete=models.CASCADE)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0,
+                                  verbose_name='余额', help_text='余额')
+    freeze_balance = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0,
+                                         verbose_name='冻结余额', help_text='冻结余额')
+    balance_available = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0,
+                                            verbose_name='可用余额', help_text='可用余额')
+
+    accumulative_consumption = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0,
+                                                   verbose_name='累计消费', help_text='累计消费')
+
+    integral = models.IntegerField(default=0, verbose_name='积分', help_text='积分')
+
+    growth_value = models.IntegerField(default=0, verbose_name='成长值', help_text='成长值')
+
+
 class UserAddress(models.Model):
     """
     用户地址表
@@ -43,6 +61,8 @@ class UserProductCart(models.Model):
                                 help_text='商品ID', on_delete=models.CASCADE)
     spec = models.ForeignKey(to=ProductSpecGroup, verbose_name='规格', null=True, blank=True, default=None,
                              help_text='商品规格ID', on_delete=models.CASCADE)
+
+    is_select = models.BooleanField(verbose_name='是否选择', default=True, null=True, blank=True, help_text='是否选中')
 
 
 class UserOrder(models.Model):

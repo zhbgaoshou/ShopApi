@@ -12,6 +12,18 @@ class WxUserSerializer(serializers.ModelSerializer):
         }
 
 
+class UserAssetSerializer(serializers.ModelSerializer):
+    user_info = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.UserAsset
+        fields = '__all__'
+
+    def get_user_info(self, obj):
+        ser = WxUserSerializer(instance=obj.user)
+        return ser.data
+
+
 class UserAddressSerializer(serializers.ModelSerializer):
     userInfo = WxUserSerializer(read_only=True, source='user')
     create_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')

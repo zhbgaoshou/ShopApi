@@ -41,3 +41,17 @@ class UserOrderView(ModelViewSet):
     ordering_fields = "__all__"
     ordering = ['id']
     filterset_fields = ['order_number', 'user', 'status', 'product']
+
+
+class UserAssetView(ModelViewSet):
+    """
+    用户余额管理
+    """
+    queryset = models.UserAsset.objects.all()
+    serializer_class = serializers.UserAssetSerializer
+    ordering_fields = "__all__"
+    ordering = ['id']
+    filterset_fields = ['user']
+
+
+

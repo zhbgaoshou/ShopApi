@@ -75,6 +75,9 @@ class Product(models.Model):
     check_status = models.SmallIntegerField(choices=check_choices, help_text="审核状态(0, '未审核'), (1, '已审核')",
                                             verbose_name="审核状态(0, '未审核'), (1, '已审核')", default=0)
 
+    is_up = models.BooleanField(default=False, null=True, blank=True, verbose_name='是否上架',
+                                help_text='是否上架(是否上架，布尔型)')
+
 
 class ProductSpec(models.Model):
     """
