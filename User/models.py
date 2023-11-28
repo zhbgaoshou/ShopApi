@@ -85,6 +85,8 @@ class UserOrder(models.Model):
     address = models.ForeignKey(to=UserAddress, on_delete=models.CASCADE, null=True, blank=True, default=None,
                                 help_text='地址ID', verbose_name='订单地址')
 
+    count = models.IntegerField(verbose_name='购买数量', help_text='购买数量', default=0, null=True, blank=True)
+
 
 @receiver(post_delete, sender=WxUser)
 def del_static(sender, instance, **kwargs):
