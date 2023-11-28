@@ -1,13 +1,28 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import WxUserSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework import mixins
 from . import models
 from . import serializers
+import requests
 
 
 # Create your views here.
+
+class OpenIdView(APIView):
+    def get(self, request):
+        codeId = request.query_params.get('codeId')
+        url = 'https://api.weixin.qq.com/sns/jscode2session'
+        params = {
+            'appid': 'wx9674c609e85cacac',
+            'secret': '5878e672812d914734b7e9be1c09e2ed',
+            'js_code': codeId,
+            'grant_type': 'authorization_code'
+        }
+        response = requests.get(url=url, params=params)
+        response.encoding = 'utf-8'
+
+        return Response(response.json())
+
 
 class WxUserView(ModelViewSet):
     queryset = models.WxUser.objects.all()
@@ -52,6 +67,3 @@ class UserAssetView(ModelViewSet):
     ordering_fields = "__all__"
     ordering = ['id']
     filterset_fields = ['user']
-
-
-

@@ -24,6 +24,12 @@ class IndexSeckill(models.Model):
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='秒杀区产品', help_text='产品ID',
                                 null=True, blank=True, default=None)
 
+    count = models.IntegerField(verbose_name='秒杀数量', help_text='秒杀数量(库存)', default=0, null=True, blank=True)
+
+    sell = models.IntegerField(verbose_name='出售', help_text='出售数量', default=0, null=True, blank=True)
+
+    surplus = models.IntegerField(verbose_name='剩余', help_text='剩余数量', default=0, null=True, blank=True)
+
 
 class IndexSuggest(models.Model):
     """

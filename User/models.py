@@ -86,6 +86,8 @@ class UserOrder(models.Model):
                                 help_text='地址ID', verbose_name='订单地址')
 
     count = models.IntegerField(verbose_name='购买数量', help_text='购买数量', default=0, null=True, blank=True)
+    money = models.DecimalField(verbose_name='金额', help_text='金额', null=True, blank=True, default=0, max_digits=10,
+                                decimal_places=2)
 
 
 @receiver(post_delete, sender=WxUser)
