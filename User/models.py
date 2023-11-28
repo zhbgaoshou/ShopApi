@@ -16,6 +16,8 @@ class WxUser(models.Model):
     openId = models.CharField(verbose_name='openId', max_length=100, help_text='openId')
     avatar = models.ImageField(verbose_name='微信头像', upload_to='static/User/images/%Y-%m-%d', help_text='用户头像',
                                null=True, blank=True, default=None)
+    date = models.DateField(auto_now_add=True, verbose_name='注册日期', help_text='注册日期', null=True, blank=True)
+
 
 
 class UserAsset(models.Model):
@@ -88,6 +90,7 @@ class UserOrder(models.Model):
     count = models.IntegerField(verbose_name='购买数量', help_text='购买数量', default=0, null=True, blank=True)
     money = models.DecimalField(verbose_name='金额', help_text='金额', null=True, blank=True, default=0, max_digits=10,
                                 decimal_places=2)
+    date = models.DateField(auto_now_add=True, verbose_name='日期', help_text='日期', null=True, blank=True)
 
 
 @receiver(post_delete, sender=WxUser)

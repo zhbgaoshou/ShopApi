@@ -78,6 +78,8 @@ class Product(models.Model):
     is_up = models.BooleanField(default=False, null=True, blank=True, verbose_name='是否上架',
                                 help_text='是否上架(是否上架，布尔型)')
 
+    sold = models.IntegerField(default=0, null=True, blank=True, verbose_name='已售', help_text='已售产品')
+
 
 class ProductSpec(models.Model):
     """

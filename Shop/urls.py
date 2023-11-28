@@ -4,6 +4,8 @@ from .routers import Routers
 from account.router import account_info_router
 from doc.router import doc_router
 from User.views import OpenIdView
+from echarts.router import echarts_router
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -13,4 +15,4 @@ urlpatterns = [
 ]
 
 # token路由和文档路由
-urlpatterns += account_info_router() + doc_router()
+urlpatterns += account_info_router() + doc_router() + echarts_router()

@@ -59,7 +59,9 @@ INSTALLED_APPS = [
     'coreapi',
     'drf_yasg',
     "corsheaders",
-    'chat'
+    'chat',
+    'echarts',
+    'channels'
 ]
 
 MIDDLEWARE = [
