@@ -105,8 +105,8 @@ class AfterSale(models.Model):
 
     user = models.ForeignKey(to=WxUser, on_delete=models.CASCADE, help_text='用户', null=True, blank=True,
                              default=None)
-    after_sale_status = models.SmallIntegerField(choices=after_sale_choices, help_text='申请状态', default=0)
-    cause = models.TextField(help_text="申请售后原因((0, '待处理'), (1, '处理中'), (2, '已处理'))")
+    after_sale_status = models.SmallIntegerField(choices=after_sale_choices, help_text="申请状态(0, '待处理'), (1, '处理中'), (2, '已处理')", default=0)
+    cause = models.TextField(help_text="(申请售后原因)")
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE, help_text='申请售后商品ID', null=True,
                                 blank=True,
                                 default=None)
