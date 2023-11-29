@@ -2,6 +2,7 @@ from rest_framework import serializers
 from . import models
 
 
+
 class Category1Serializer(serializers.ModelSerializer):
     category_text = serializers.SerializerMethodField(read_only=True)
 
@@ -109,3 +110,6 @@ class ProductPropertyGroupSerializer(serializers.ModelSerializer):
 
     def get_group_array(self, obj):
         return obj.group.split('|')
+
+
+

@@ -9,4 +9,5 @@ def user_router():
     router.register('user_cart', views.UserProductCartView)
     router.register('user_asset', views.UserAssetView),
     router.register('user', views.WxUserView)
+    router.register('user_after_sale', views.AfterSaleView)
     return router.urls

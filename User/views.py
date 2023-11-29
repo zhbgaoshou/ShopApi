@@ -67,3 +67,12 @@ class UserAssetView(ModelViewSet):
     ordering_fields = "__all__"
     ordering = ['id']
     filterset_fields = ['user']
+
+
+class AfterSaleView(ModelViewSet):
+    queryset = models.AfterSale.objects.all()
+    serializer_class = serializers.AfterSaleSerializer
+    ordering_fields = "__all__"
+    ordering = ['id']
+    filterset_fields = ['user', 'product', 'after_sale_status']
+    search_fields = ['cause']

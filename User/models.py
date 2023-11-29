@@ -19,7 +19,6 @@ class WxUser(models.Model):
     date = models.DateField(auto_now_add=True, verbose_name='注册日期', help_text='注册日期', null=True, blank=True)
 
 
-
 class UserAsset(models.Model):
     user = models.ForeignKey(verbose_name='用户ID', null=True, blank=True, default=None, help_text='用户ID', to=WxUser,
                              on_delete=models.CASCADE)
@@ -91,6 +90,26 @@ class UserOrder(models.Model):
     money = models.DecimalField(verbose_name='金额', help_text='金额', null=True, blank=True, default=0, max_digits=10,
                                 decimal_places=2)
     date = models.DateField(auto_now_add=True, verbose_name='日期', help_text='日期', null=True, blank=True)
+
+
+class AfterSale(models.Model):
+    """
+        售后表
+        """
+    after_sale_choices = ((0, '待处理'), (1, '处理中'), (2, '已处理'))
+    application_time = models.DateTimeField(auto_now_add=True, help_text='申请售后时间', null=True, blank=True)
+    money = models.DecimalField(help_text='金额', max_digits=10, decimal_places=2, default=0)
+
+    processing_time = models.DateTimeField(help_text='处理时间', null=True, blank=True,
+                                           default=None)
+
+    user = models.ForeignKey(to=WxUser, on_delete=models.CASCADE, help_text='用户', null=True, blank=True,
+                             default=None)
+    after_sale_status = models.SmallIntegerField(choices=after_sale_choices, help_text='申请状态', default=0)
+    cause = models.TextField(help_text="申请售后原因((0, '待处理'), (1, '处理中'), (2, '已处理'))")
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, help_text='申请售后商品ID', null=True,
+                                blank=True,
+                                default=None)
 
 
 @receiver(post_delete, sender=WxUser)

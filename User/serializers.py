@@ -69,3 +69,28 @@ class UserOrderSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_status_info(data):
         return data.get_status_display()
+
+
+class AfterSaleSerializer(serializers.ModelSerializer):
+    user_info = serializers.SerializerMethodField(read_only=True)
+    product_info = serializers.SerializerMethodField(read_only=True)
+    status_info = serializers.SerializerMethodField(read_only=True)
+    application_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+    processing_time = serializers.DateTimeField(format='%Y-%m-%d %H:%M:%S')
+
+    class Meta:
+        model = models.AfterSale
+        fields = "__all__"
+
+    def get_user_info(self, obj):
+        ser = WxUserSerializer(instance=obj.user)
+        return ser.data
+
+    def get_product_info(self, obj):
+        ser = ProductSerializer(instance=obj.product)
+        return ser.data
+
+    @staticmethod
+    def get_status_info(data):
+        return data.get_after_sale_status_display()
+
